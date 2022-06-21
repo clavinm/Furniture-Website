@@ -238,7 +238,6 @@ $(document).ready(function(){
             dataType:"JSON",
             success:function(data)
             {
-                
                 $('#average_rating').text(data.average_rating);
                 $('#total_review').text(data.total_review);
 

@@ -40,6 +40,7 @@
                 $img1 = $pdetail_row['image'];
             }
         }
+        
         ?>
           <div class="col-md-5 mb-4 mb-md-0">
             <div class="view zoom z-depth-2 rounded">
@@ -142,8 +143,106 @@
           </div>
 
         </div>
-              <?php include 'review/index.php';?>
+              
       </section>
+											<h4 class="title">Customer Reviews</h4>
+<?php 
+if(isset($_POST['revie']))
+{
+	$name=$_POST['name'];
+	$review=$_POST['review'];
+	mysqli_query($con,"insert into review(productId,name,review) values('$pid','$name','$review')");
+}
+$qry=mysqli_query($con,"select * from review where productId='$pid'");
+while($rvw=mysqli_fetch_array($qry))
+{
+?>
+
+<div class="row mb-3">
+
+<div class="col-sm-1"><div class="rounded-circle bg-danger text-white pt-2 pb-2"><h3 class="text-center"><?php 
+//$que ="SELECT SUBSTRING(name, 1, 1) FROM review";
+//$run = mysqli_query($con,$que);
+//$ro=mysqli_fetch_array($run);
+//echo $ro['name'];
+$username = $rvw['name']; 
+echo htmlentities($username[0]);
+
+
+?></h3></div></div>
+
+<div class="col-sm-11">
+
+<div class="card">
+
+<div class="card-header"><b><?php  echo htmlentities($rvw['name']);?></b></div>
+
+<div class="card-body">
+
+
+<br />
+<?php echo htmlentities($rvw['review']);?>
+
+</div>
+
+<div class="card-footer text-right"><?php echo htmlentities($rvw['reviewDate']);?></div>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+
+
+
+
+
+											
+											<?php } ?><!-- /.reviews -->
+										
+<div class="container">
+										<form role="form" class="cnt-form" name="review" method="post">
+
+										
+										<div class="product-add-review">
+											<h4 class="title">Write your own review</h4>
+											<div class="review-table">
+												<div class="table-responsive">
+													</div><!-- /.table-responsive -->
+											</div><!-- /.review-table -->
+											
+											<div class="review-form">
+												<div class="form-container">
+													
+														
+														<div class="row">
+															<div class="col-sm-6">
+																<div class="form-group">
+																	<label for="exampleInputName">Your Name <span class="astk">*</span></label>
+																<input type="text" class="form-control txt" id="exampleInputName" placeholder="" name="name" required="required">
+																</div><!-- /.form-group -->
+																
+															</div>
+
+															<div class="col-md-6">
+																<div class="form-group">
+																	<label for="exampleInputReview">Review <span class="astk">*</span></label>
+
+<textarea class="form-control txt txt-review" id="exampleInputReview" rows="4" placeholder="" name="review" required="required"></textarea>
+																</div><!-- /.form-group -->
+															</div>
+														</div><!-- /.row -->
+														
+														<div class="action text-right">
+															<button name="revie" class="btn btn-primary btn-upper">SUBMIT REVIEW</button>
+														</div><!-- /.action -->
+
+													</form><!-- /.cnt-form -->
+</div>
+      
       <!--Section: Block Content-->
 
       <!--Section: New products-->
