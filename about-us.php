@@ -9,8 +9,8 @@
             <div class="col-md-7" style="height:66.5vh;">
               <h1>Souza Furniture Mart</h1>
               <p>
-                Welcome to Online Furniture Shop, your number one source for all things.
-                Online Furniture Shop Management System is a process in which we can order 
+                Welcome to Souza Furniture Mart, your number one source for all things.
+                This System is a process in which we can order 
                 various furniture items online. <br>
                 We're dedicated to providing you the very best of product, with an emphasis
                 on bed set, dining set, chairs, table, sofas, and cupboard.<br><br>

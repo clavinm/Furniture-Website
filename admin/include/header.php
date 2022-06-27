@@ -27,6 +27,10 @@ require_once('/Xampp/htdocs/furniture-shop-main/include/dbcon.php');
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   
 </head>
+<?php
+if(isset($_SESSION['email']))
+{
+  ?>
 
 <body id="page-top">
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
@@ -104,3 +108,4 @@ require_once('/Xampp/htdocs/furniture-shop-main/include/dbcon.php');
     </ul>
   </div>  
 </nav>
+<?php }?>

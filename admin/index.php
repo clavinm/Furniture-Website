@@ -146,13 +146,17 @@ if(isset($_SESSION['email'])){
                                             $order_invoice = $order_row['invoice_no'];
                                             $order_id      = $order_row['order_id'];
                                             $cust_id       = $order_row['customer_id'];
-                                            $cust_email    = $order_row['customer_email'];
                                             $order_pro_id  = $order_row['product_id'];
                                             $order_qty     = $order_row['products_qty'];
                                             $order_amount  = $order_row['product_amount'];
                                             $order_date    = $order_row['order_date'];
                                             $order_status  = $order_row['order_status'];
-
+                                          $que="SELECT * from customer WHERE cust_id=$cust_id";
+                                          $ru=mysqli_query($con,$que);
+                                          $ro=mysqli_fetch_array($ru);
+                                            $cust_email    = $ro['cust_email'];
+                                          
+                                          
                                             $pr_query = "SELECT * FROM furniture_product fp INNER JOIN categories cat ON fp.category = cat.id WHERE pid = $order_pro_id ";
                                             $pr_run   = mysqli_query($con,$pr_query);
                                             

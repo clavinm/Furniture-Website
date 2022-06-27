@@ -73,7 +73,7 @@
                                               $pro_total_price = array($db_pro_qty * $price);  
 
                                             //   $values = array_sum($arrPrice);
-                                              $shipping_cost=0;
+                                              $shipping_cost=50;
                                               $values = array_sum($pro_total_price);
                                               $sub_total +=$values;
                                               $total = $sub_total + $shipping_cost;

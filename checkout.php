@@ -1,58 +1,5 @@
 <?php 
- use PHPMailer\PHPMailer\PHPMailer;
- use PHPMailer\PHPMailer\SMTP;
- use PHPMailer\PHPMailer\Exception;
-require '/Xampp/htdocs/furniture-shop-main/vendor/autoload.php';
-
-ob_start();
-session_start();
-include('include/header.php');
-
-$invoice_no = $_SESSION['order_invoice'];
-
-function send_mail($customer_email,$invoice_no){
-  $mail = new PHPMailer(true);
-
-
-  $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      //Enable verbose debug output
-    $mail->isSMTP();                                            //Send using SMTP
-    $mail->Host       = 'smtp.gmail.com';                     //Set the SMTP server to send through
-    $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Username   = 'pw9766539@gmail.com';                     //SMTP username
-    $mail->Password   = 'cscdyvzsjdjpfjqz';                               //SMTP password
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;            //Enable implicit TLS encryption
-    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
-    //Recipients
-    $mail->setFrom('pw9766539@gmail.com');
-    $mail->addAddress($customer_email);
-
-    //Content
-    $mail->isHTML(true);                                  //Set email format to HTML
-    $mail->Subject = 'no reply';
-    $mail->Subject = "Souza Furniture Mart";
-  
-  
-  $email_template = "
-<h1>	
-Souza Furniture Mart
-</h1>
-<h2>
-Woo hoo! Your order is on its way. Your order details can be found below.
-<br>
-<br>
-To Know about your Order details 
-<a href='http://localhost/furniture-shop-main/admin/invoice.php?invoice=$invoice_no'> Click Me </a>
-                 
-
-
-
-  ";
-  
-  $mail->Body = $email_template;
-  $mail->send();
-  
-}
+ include('include/header.php');
 
 
 ?>
@@ -73,13 +20,12 @@ To Know about your Order details
       $sub_total=0;
       $shipping_cost = 0;
       $total = 0;
-
       if(isset($_POST['checkout'])){
-        $fullname = $_POST['fullname'];
         $address  = $_POST['address'];
         $city     = $_POST['city'];
         $code     = $_POST['code'];
         $number   = $_POST['phone_number'];
+        $payment = $_POST['paymethod'];
         $invoice  = mt_rand();
         $date     = date("d-m-Y"); 
         
@@ -101,18 +47,18 @@ To Know about your Order details
 
               $single_pro_total_price = $db_pro_qty * $price;
                 
-              $checkout_query  = "INSERT INTO `customer_order`(`customer_id`, `customer_email`,
-              `customer_fullname`, `customer_address`, `customer_city`, `customer_pcode`, `customer_phonenumber`,
-              `product_id`, `product_amount`, `invoice_no`, `products_qty`, `order_date`, `order_status`)
-              VALUES('$customer_id','$customer_email','$fullname','$address','$city','$code','$number',$db_pro_id,
-              $single_pro_total_price,'$invoice',$db_pro_qty,'$date','pending')";
+              $checkout_query  = "INSERT INTO `customer_order`(`customer_id`,
+              `customer_address`, `customer_city`, `customer_pcode`, `customer_phonenumber`,
+              `product_id`, `product_amount`, `invoice_no`, `products_qty`, `order_date`, `order_status`, `paymentMethod`)
+              VALUES('$customer_id','$address','$city','$code','$number',$db_pro_id,
+              $single_pro_total_price,'$invoice',$db_pro_qty,'$date','pending','$payment')";
               
                
                   if(mysqli_query($con,$checkout_query)){
                         $del_query = "DELETE FROM cart where cust_id = $customer_id";
                         if(mysqli_query($con,$del_query)){
                              
-              send_mail($customer_email,$invoice_no);
+             //send_mail($customer_email,$invoice_no);
               
               header('Location: customer/orders.php');
             
@@ -148,10 +94,7 @@ To Know about your Order details
                     </div>
 
                    <form method="post"  class="mt-4">
-                      <div class="form-group">
-                        <label for="fullname">Fullname:</label>
-                        <input type="text" name="fullname" placeholder="Full Name" class="form-control" value="<?php echo $customer_name; ?>" required>
-                      </div>
+                      
 
                         <div class="form-group">
                           <label for="address">Address:</label>
@@ -179,6 +122,14 @@ To Know about your Order details
                         <label for="number">Number:</label>
                         <input type="number" name="phone_number" placeholder="Phone Number" class="form-control" value="<?php echo $customer_number; ?>" required>
                       </div>
+                      <div class="form-group">
+                        <label for="number">Payment Method:</label>
+                        
+	    <input type="radio" name="paymethod" value="COD" checked="checked"> COD
+	     <input type="radio" name="paymethod" value="Debit / Credit card"> Debit / Credit card <br /><br />
+	     	
+		</div>
+		
 
                       <div class="form-group text-center mt-4">
                           <input type="submit" name="checkout" class="btn btn-primary btn-block p-2" value="Place Order" id="border-less">
@@ -219,7 +170,7 @@ To Know about your Order details
                               $pro_total_price = array($db_pro_qty * $price);  
                               $each_pr = implode($pro_total_price);
                                            //   $values = array_sum($arrPrice);
-                                 $shipping_cost=0;
+                                 $shipping_cost=50;
                                  $values = array_sum($pro_total_price);
                                  $sub_total +=$values;
                                  $total = $sub_total + $shipping_cost;

@@ -32,7 +32,7 @@ include_once('include/dbcon.php');?>
        <!--header ---> 
              <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
                <a href="" class="navbar-brand"> 
-                   <img src="/img/favicon.png" width="40px" height="40px"><sapn class="font-weight-bold">Souza Furniture Mart</sapn>
+                   <img src="https://cdn1.vectorstock.com/i/1000x1000/54/75/home-furniture-logo-vector-34005475.jpg" width="40px" height="40px"><sapn class="font-weight-bold">Souza Furniture Mart</sapn>
                </a>
                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapisblenav" aria-controls="collapsiblenav">
                  <span class="navbar-toggler-icon"></span>

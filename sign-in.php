@@ -82,7 +82,7 @@ include('include/header.php'); ?>
                     <input type="password" name="password" placeholder="password" class="form-control" required>
                     </div>
                       
-                    <a href="#" > Forget Password?</a>
+                    <a href="forgot-pass.php" > Forget Password?</a>
 
                       <div class="form-group text-center mt-4">
                         <input type="submit" name="signin" class="btn btn-primary" value="Sign in">

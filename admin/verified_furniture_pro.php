@@ -46,6 +46,7 @@ include("include/header.php");
                               <th>Customer Email</th>
                               <th>Price (Rs)</th>
                               <th>Quantity</th>
+                              <th>Payment Method</th>
                               <th>Order_Status</th>
                               <th>Order_Date</th>
                               <th>Download Invoice</th>
@@ -60,16 +61,21 @@ include("include/header.php");
                         
                                     if(mysqli_num_rows($run) > 0){
                                         while($order_row = mysqli_fetch_array($run)){
-                                            $_SESSION['order_invoice'] = $order_row['invoice_no'];
+                                            $invoice = $order_row['invoice_no'];
                                             $order_id      = $order_row['order_id'];
                                             $cust_id       = $order_row['customer_id'];
-                                            $cust_email    = $order_row['customer_email'];
                                             $order_pro_id  = $order_row['product_id'];
                                             $order_qty     = $order_row['products_qty'];
                                             $order_amount  = $order_row['product_amount'];
                                             $order_date    = $order_row['order_date'];
                                             $order_status  = $order_row['order_status'];
-
+                                            
+                                            $pay_status  = $order_row['paymentMethod'];
+                                            $que="SELECT * from customer WHERE cust_id=$cust_id";
+                                          $ru=mysqli_query($con,$que);
+                                          $ro=mysqli_fetch_array($ru);
+                                            $cust_email    = $ro['cust_email'];
+                                          
                                                 $pr_query = "SELECT * FROM furniture_product fp INNER JOIN categories cat ON fp.category = cat.id WHERE pid = $order_pro_id ";
                                                 $pr_run   = mysqli_query($con,$pr_query);
                                                 
@@ -82,7 +88,7 @@ include("include/header.php");
                             ?> 
                              <tr>
                                  <td>
-                                 <?php echo $_SESSION['order_invoice'];?>
+                                 <?php echo $invoice?>
                                  </td>
                                  <td>
                                  <?php echo $order_id;?>
@@ -107,6 +113,8 @@ include("include/header.php");
                                  </td>
 
                                  <td><?php echo $order_qty;?></td>
+                                 <td><?php echo $pay_status;?></td>
+
 
                                 <td>
                                    
@@ -118,9 +126,10 @@ include("include/header.php");
                                 
                                </td>
                                <td><?php echo $order_date;?></td>
-                               <td><a href="invoice.php?invoice=<?php echo $_SESSION['order_invoice']; ?>"><i class="fad fa-arrow-alt-circle-down fa-3x text-primary"></i></a></td>
+                               <td><a href="invoice.php?invoice=<?php echo $invoice?>"><i class="fad fa-arrow-alt-circle-down fa-3x text-primary"></i></a></td>
                                <td><a href="edit_furn_verify_pen.php?order_id=<?php echo $order_id; ?>"><button type="button" class="btn btn-primary btn-sm"> Edit</button></a></td>
-                            <!--<td><a href="email.php">Send</a></td>-->
+                                   
+                               <!--<td><a href="email.php">Send</a></td>-->
                             </tr>   
                            <?php 
                                   }

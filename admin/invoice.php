@@ -18,7 +18,8 @@ $pdf->SetFont('Arial','',12);
 
 $query = "SELECT * FROM customer_order WHERE invoice_no= $invoice_no";
 $run = mysqli_query($con,$query);
-
+//$ro = mysqli_num_rows($run);
+//if($ro == 1){
 $row = mysqli_fetch_array($run);
 $order_invoice  = $row['invoice_no'];
 $cust_id        = $row['customer_id'];
@@ -26,25 +27,22 @@ $order_date     = $row['order_date'];
 $product_id     = $row['product_id'];
 $product_qty    = $row['products_qty'];
 $product_amount = $row['product_amount'];    
-       //customer Query
-      $query = "SELECT * FROM customer WHERE cust_id=$cust_id";
-      $run   = mysqli_query($con,$query);
-      $row   = mysqli_fetch_array($run);
-      $cust_name    = $row['cust_name'];
-      $cust_email   = $row['cust_email'];
-      $cust_add     = $row['cust_add'];
-      $cust_city    = $row['cust_city'];
-      $cust_pcode   = $row['cust_postalcode'];
-      $cust_number  = $row['cust_number'];
+      
+      $cust_add     = $row['customer_address'];
+      $cust_city    = $row['customer_city'];
+      $cust_pcode   = $row['customer_pcode'];
+      $cust_number  = $row['customer_phonenumber'];
       //end customer query
-
+      $que="SELECT * from customer WHERE cust_id=$cust_id";
+      $ru=mysqli_query($con,$que);
+      $ro=mysqli_fetch_array($ru);
+        $cust_email    = $ro['cust_email'];
+        $cust_name     = $ro['cust_name'];
+      
 
      //product Query
-      $query="SELECT * FROM furniture_product WHERE pid=$product_id";
+      $query="SELECT * FROM furniture_product f, customer_order s WHERE f.pid in(SELECT s.product_id FROM customer_order WHERE s.invoice_no='$invoice_no')";
       $run=mysqli_query($con,$query);
-      $row=mysqli_fetch_array($run);
-      $title=$row['title'];
-      $price=$row['price'];
       //end product query
 
 
@@ -96,31 +94,51 @@ $pdf->Cell(34	,5,'Single Amount',1,1);//end of line
 $pdf->SetFont('Arial','',10);
 
 //Numbers are right-aligned so we give 'R' after new line parameter
+      
+      $amount=50;
+   while($row=mysqli_fetch_array($run)){
+      
+$pdf->Cell(130	,5,$row['title'],1,0);
+$pdf->Cell(25	,5,$row['products_qty'],1,0);
+$pdf->Cell(34	,5,$row['product_amount'],1,1,'R');
 
-$pdf->Cell(130	,5,$title,1,0);
-$pdf->Cell(25	,5,$product_qty,1,0);
-$pdf->Cell(34	,5,$price,1,1,'R');//end of line
+$amount += $row['product_amount'];
 
+//end of line
+   }
 
 //summary
 $pdf->Cell(130	,5,'',0,0);
 $pdf->Cell(25	,5,'Shipping',1,0);
 $pdf->Cell(10	,5,'Rs',1,0);
-$pdf->Cell(24	,5,'0',1,1,'R');//end of line
+$pdf->Cell(24	,5,'50',1,1,'R');//end of line
 
 
 $pdf->Cell(130	,5,'',0,0);
 $pdf->Cell(25	,5,'Subtotal',1,0);
 $pdf->Cell(10	,5,'Rs',1,0);
-$pdf->Cell(24	,5,$product_amount,1,1,'R');//end of line
+$pdf->Cell(24	,5,$amount,1,1,'R');//end of line
 
 $pdf->Cell(130	,5,'',0,0);
 $pdf->Cell(25	,5,'Total Due',1,0);
 $pdf->Cell(10	,5,'Rs',1,0);
-$pdf->Cell(24	,5,$product_amount,1,1,'R');//end of line
+$pdf->Cell(24	,5,$amount,1,1,'R');//end of line
 
 
 $pdf->Output();
+/**}else{
+   $que = "SELECT * FROM customer_order WHERE invoice_no in(SELECT invoice_no FROM customer_order GROUP BY invoice_no having count(*) > 1)";
+   $run = mysqli_query($con,$que);
+   $row= mysqli_fetch_array($run);
+   $order_invoic = $row['product_id'];
+   if($run){
+      $pdf->Cell(25	,5,'Invoice #',0,0);
+      $pdf->Cell(34	,5,$order_invoic,0,1);//end of line
+      
+      
+      $pdf->Output();
+   }
 
+} */
 }
 ?>

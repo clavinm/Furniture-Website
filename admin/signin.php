@@ -84,6 +84,18 @@
                   
                       }
                       ?>
+                       <?php
+                    if(isset($_SESSION['status']))
+                    {
+                    ?>
+                    <div class="alert alert-success">
+                    <h5><?= $_SESSION['status']; ?></h5>
+                    </div>
+                    <?php
+                    unset($_SESSION['status']);
+                    }
+                    ?>
+               
                 <div class="form-group">
                  <label for="email">Email address</label>
                  <input type="email" name="email" class="form-control" placeholder="Email address" required autofocus>
@@ -97,7 +109,7 @@
                 
                 <input class="btn btn-lg btn-primary btn-block btn-login text-uppercase font-weight-bold mb-2" type="submit" value="Sign in" name="signin">
                 <div class="text-center">
-                  <a class="small" href="">Forgot password?</a></div>
+                  <a class="small" href="forget_pass.php">Forgot password?</a></div>
 
               </form>
             </div>
