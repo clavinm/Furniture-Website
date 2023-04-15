@@ -1,6 +1,6 @@
 <?php 
  include('include/header.php');
-
+ require_once "loading/load.php";
 
 ?>
         
@@ -105,7 +105,7 @@
                         <div class="col-md-6 col-6">
                             <div class="form-group">
                             <label for="city">City:</label>
-                              <input type="text" name="city" placeholder="City" class="form-control" required >
+                              <input type="text" name="city" value="Mangalore" class="form-control" readonly >
                           </div>
                         </div>
                         

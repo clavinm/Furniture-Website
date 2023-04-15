@@ -8,6 +8,8 @@ require '/Xampp/htdocs/furniture-shop-main/vendor/autoload.php';
 include("include/header.php");
 include('include/dbcon.php');
 
+require_once "loading/load.php";
+
 function reset_link($get_email,$token)
 {
     $mail = new PHPMailer(true);

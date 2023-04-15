@@ -1,6 +1,8 @@
 <?php 
 
 include('include/header.php');
+require_once "../loading/load.php";
+
 
 if(!isset($_SESSION['email'])){
     header('location:signin.php');

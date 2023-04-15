@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -70,8 +71,9 @@ $mail->send();
 }
 
 
-
  require_once('include/header.php');
+ 
+require_once "../loading/load.php";
  if(!isset($_SESSION['email'])){
   header('location: signin.php');
 }
@@ -81,8 +83,6 @@ if(isset($_SESSION['email'])){
     $session_name = $_SESSION['name'];
 }
 ?>
-
-
 
 <div class="container-fluid mt-2">
     <script src="ckeditor/ckeditor.js"></script>

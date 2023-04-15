@@ -1,6 +1,7 @@
 <?php 
  require_once('include/header.php');
 
+ require_once "../loading/load.php";
 if(!isset($_SESSION['email'])){
     header('location: signin.php');
 }
@@ -40,17 +41,23 @@ if(isset($_SESSION['email'])){
                    $db_password = $row['password']; 
                    $image = $row['image'];
                 }
+                
                  if(isset($_POST['submit']))
                  {  
                      $name         = $_POST['name'];
                      $password     = md5($_POST['password']); 
-                                       
+                     if(!empty($name) && !empty($password))
+                     {           
 
                      $u_query ="UPDATE admin SET name='$name', password='$password' WHERE id ='$session_id'";
                       if(mysqli_query($con,$u_query)){
                          $message = "Profile Has Been Updated";
                       }              
-                       
+                    }else{
+                      $error = "Please enter valid data";
+                      echo "<p style='color:red; font-weight:bold;'>$error</p>";
+                    
+                    } 
                         
                  }
                 

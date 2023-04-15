@@ -1,4 +1,5 @@
-<?php include('include/header.php'); ?>
+<?php include('include/header.php'); 
+require_once "loading/load.php";?>
         
         <div class="jumbotron bg-primary">
             <h2 class="text-center mt-5 text-white">Edit Cart</h2>
@@ -45,7 +46,7 @@
                             <tr>
                                 <th colspan="2">Product Detail</th>
                                 <th>Quantity</th>
-                                <th>Price (Pkr)</th>
+                                <th>Price (Rs)</th>
                                 <th>Total</th>
                             </tr>
                         </thead>
@@ -132,9 +133,9 @@
                         
                     </div>
                     <div class="col-md-6 col-sm-6 col-6">
-                        <h6 class="text-right font-weight-normal">PKR <?php echo $sub_total;?></h6>
-                        <h6 class="text-right font-weight-normal">PKR <?php echo $shipping_cost;?></h6>
-                        <h5 class="text-right font-weight-bold">PKR <?php echo $total;?></h5>
+                        <h6 class="text-right font-weight-normal">Rs <?php echo $sub_total;?></h6>
+                        <h6 class="text-right font-weight-normal">Rs <?php echo $shipping_cost;?></h6>
+                        <h5 class="text-right font-weight-bold">Rs <?php echo $total;?></h5>
                     </div>
                   </div>
                 </div>

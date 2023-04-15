@@ -1,6 +1,8 @@
 <?php 
 session_start();
 include_once('include/dbcon.php');?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -29,6 +31,13 @@ include_once('include/dbcon.php');?>
        $count = 0;
        }
         ?>
+
+
+
+
+
+
+
        <!--header ---> 
              <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
                <a href="" class="navbar-brand"> 
@@ -55,9 +64,14 @@ include_once('include/dbcon.php');?>
                     
                      if(isset($_SESSION['remail'])){
                             
-                       
+                      $que = "SELECT cust_name FROM customer WHERE cust_id=$cust_id";
+                      $ru = mysqli_query($con, $que);
+                      $ro = mysqli_fetch_array($ru);
+                      $roe = $ro['cust_name'];
+                      
+                     
                      ?>
-                    <li class="nav-item ml-5"><a class="nav-link" href="customer/index.php"><i class="far fa-user top-icon"></i> Account</a></li>
+                    <li class="nav-item ml-5"><a class="nav-link" href="customer/index.php"><i class="far fa-user top-icon"></i>Hi,<?php echo "$roe";?></a></li>
                     <?php }
                      ?>
                     <li class="nav-item"><a class="nav-link" href="cart.php"><i class="fal fa-shopping-cart top-icon"></i><span class="badge badge-primary" style="position:absolute; margin-left:-5px;"><?php echo $count; ?> </span></a></li>

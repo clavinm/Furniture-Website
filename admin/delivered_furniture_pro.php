@@ -1,4 +1,6 @@
 <?php include("include/header.php");
+ require_once "../loading/load.php";
+
 if(!isset($_SESSION['email'])){
     header('location: signin.php');
 }
@@ -32,7 +34,7 @@ if(!isset($_SESSION['email'])){
                               <th>Product Category</th>
                               <th>Customer Id</th>
                               <th>Customer Email</th>
-                              <th>Price (Pkr)</th>
+                              <th>Price (Rs)</th>
                               <th>Quantity</th>
                               <th>Order_Status</th>
                               <th>Order_Date</th>

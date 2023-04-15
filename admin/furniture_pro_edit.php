@@ -1,5 +1,7 @@
 <?php 
  require_once('include/header.php');
+ require_once "../loading/load.php";
+
  if(!isset($_SESSION['email'])){
   header('location: signin.php');
 }
@@ -60,9 +62,10 @@ if(isset($_SESSION['email'])){
                                     if(move_uploaded_file($tmp_image,$path) == true){
                                         copy($path,"../".$path);                                                                    
                                     }
-                                    header("location:furniture_pro_edit.php?pid=$Fur_pro_id");
-                                  
+                                    header("location:furniture_pro_view.php");
+                                  $msg = "Updated Successfully";
                                 }
+                                
                                   
                                 
                             }else {
@@ -72,6 +75,7 @@ if(isset($_SESSION['email'])){
                         }
                         
                         }
+                        
                     }
        
                     ?>

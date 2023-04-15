@@ -1,4 +1,6 @@
-<?php include("include/header.php");?>
+<?php include("include/header.php");
+ require_once "../loading/load.php";
+?>
 <?php
          if(!isset($_SESSION['email']))
           {

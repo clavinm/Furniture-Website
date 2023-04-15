@@ -22,7 +22,8 @@ if(isset($_SESSION['remail'])){
       $fullname = $_POST['fullname'];
      echo $email    = $_POST['email'];
       $number   = $_POST['phone_number'];
-       
+       if(!empty($fullname) && !empty($number))
+       {
       $up_query = "UPDATE `customer` SET `cust_name`='$fullname',`cust_number`='$number' 
        WHERE cust_id=$customer_id ";
        if(mysqli_query($con,$up_query)){
@@ -35,6 +36,15 @@ if(isset($_SESSION['remail'])){
            </div>";
            header('location:personal-detail.php');
        }
+      }else{
+        $_SESSION['msg']="<div class='alert alert-danger alert-dismissible fade show pt-1 pb-1 pl-3'  role='alert'>
+                           <strong><i class='fas fa-info-circle'></i> Ooh! </strong>Fields Cannot Be Empty.
+                           <button type='button' class='close p-2' data-dismiss='alert' aria-label='Close'>
+                            <span  aria-hidden='true'>&times;</span>
+                           </button>
+                            </div>";
+
+      }
       }
 }
 

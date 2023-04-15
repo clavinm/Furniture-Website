@@ -1,20 +1,15 @@
-<?php include('include/header.php'); ?>
+<?php include('include/header.php'); 
+require_once "loading/load.php";?>
 
         <div class="container sign-in-up">
-          <div class="row">
-            <div class="col-md-6">
-              <h1>Online Furniture Store</h1>
-              <p>An online furniture shop that allows users to check for various furniture available at the online 
-                store and purchase online. The project consists of list of furniture products displayed in various
-                 models and designs. The user may browse through these products as per categories. If the user likes 
-                 a product he may add it to his shopping cart. Once user wishes to checkout he must 
-                register on the site first. He can then login using same id password next time.</p>
-            </div>
+          <div class="row justify-content-center">
             
             <div class="col-md-6">
               <div class="card">
                 <div class="card-body">
-                  <h1 class="text-center mt-5">Register Account</h1>
+                <h1 class="text-center mt-5">Souza Furniture Mart</h1>
+                  
+                  <h2 class="text-center mt-5">Register Account</h2>
                   
                   
                   <form method="post" class="mt-5 p-3">
@@ -28,8 +23,11 @@
                           $conf_pass = md5($_POST['confirm-password']);
                           $number = $_POST['phone_number'];
                           
-                          if(!empty($fullname) or !empty($email) or !empty($password) or !empty($conf_pass) or !empty($address) or !empty($city) or !empty($postal_code) or !empty($number)){
-
+                          if(!empty($fullname) && !empty($email) && !empty($password) && !empty($conf_pass) && !empty($number)){
+                            $que = mysqli_query($con,"SELECT * FROM customer WHERE cust_email='$email'");
+                            if(mysqli_num_rows($que) > 0){
+                              $error = "Email Already Exsist";
+                            }else{
                             if($password === $conf_pass){
 
                               $cust_query="INSERT INTO customer(`cust_name`,`cust_email`,`cust_pass`,`cust_number`) VALUES('$fullname','$email','$password','$number')";
@@ -46,11 +44,13 @@
                                 $error="Passwords do not Match";
                             }
                           }
+                        }
                             else{
                           $error="All (*) Fields Required";
                       }
-                      }
                     
+                      }
+                      
                       ?>
                       <?php
                       if(isset($error)){

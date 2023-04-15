@@ -1,5 +1,7 @@
 <?php 
  require_once('include/header.php');
+  require_once "../loading/load.php";
+
 if(!isset($_SESSION['email'])){
     header('location: signin.php');
 }
@@ -18,7 +20,11 @@ if(!isset($_SESSION['email'])){
         if(isset($_GET['del'])){
             $del   = $_GET['del'];
             $query = "DELETE FROM categories WHERE id = $del";
-            $run   = mysqli_query($con,$query);
+            $ru   = mysqli_query($con,$query);
+            $_SESSION['status']= "Category Deleted Successfully";
+            
+      
+            
         }
         
          ?>
@@ -26,7 +32,21 @@ if(!isset($_SESSION['email'])){
            
                <div class="col-md-9">
                 <div class="row">
+                <?php
+                if(isset($_SESSION['status']))
+                {
+            ?>
+                <div class="alert alert-success">
+                <h5><?= $_SESSION['status']; ?></h5>
+                </div>
+            <?php
+                unset($_SESSION['status']);
+                }
+            ?>
+            </div>
+            <div class="row">
                   <div class="col-md-1">
+                 
                     <i class="fad fa-th-list fa-6x text-primary"></i>
                   </div>
                   <div class="col-md-11 text-left mt-4">
@@ -42,7 +62,7 @@ if(!isset($_SESSION['email'])){
                            $fontawesome = $_POST['fonts'];
                             $query = "INSERT INTO `categories`(`category`, `fontawesome-icon`) VALUES ('$category',' $fontawesome')";
                              $run = mysqli_query($con,$query);
-                          
+
                         } 
                     ?>
                     

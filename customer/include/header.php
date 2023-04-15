@@ -40,16 +40,21 @@ include_once('include/dbcon.php');?>
                  <ul class="navbar-nav ml-auto">
                     <li class="nav-item"><a class="nav-link" href="../index.php">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="../product.php">Products</a></li>
-                    <li class="nav-item"><a class="nav-link" href="../about-us.php">About us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../about-us.php">Abbout Us</a></li>
                     <li class="nav-item"><a class="nav-link" href="../contact-us.php">Contact us</a></li>
                      
                     <?php  
                                 
                      if(isset($_SESSION['email'])){
-                            
-                       
+                             
+                      $que = "SELECT cust_name FROM customer WHERE cust_id=$cust_id";
+                      $ru = mysqli_query($con, $que);
+                      $ro = mysqli_fetch_array($ru);
+                      $roe = $ro['cust_name'];
+                      
+                     
                      ?>
-                    <li class="nav-item ml-5"><a class="nav-link" href="index.php"><i class="far fa-user top-icon"></i> Account</a></li>
+                    <li class="nav-item ml-5"><a class="nav-link" href="index.php"><i class="far fa-user top-icon"></i>Hi,<?php echo $roe ?></a></li>
                     <?php }
                      ?>
                     <li class="nav-item"><a class="nav-link" href="../cart.php"><i class="fal fa-shopping-cart top-icon"></i><span class="badge badge-primary" style="position:absolute; margin-left:-5px;"><?php echo $count; ?> </span></a></li>

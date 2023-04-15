@@ -1,4 +1,5 @@
 <?php include('include/header.php'); 
+require_once "loading/load.php";
 
 if(isset($_SESSION['remail'])){
   $custid = $_SESSION['id'];
@@ -259,6 +260,7 @@ if(isset($_SESSION['remail'])){
               </div>
           </div>
       </section>
+   
        <!---end How to shop-->
    
 <?php include('include/footer.php'); ?>

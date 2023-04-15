@@ -1,4 +1,5 @@
-<?php include('include/header.php'); ?>
+<?php include('include/header.php'); 
+require_once "loading/load.php";?>
         
         <div class="jumbotron b">
             <h2 class="text-center mt-5">Cart</h2>

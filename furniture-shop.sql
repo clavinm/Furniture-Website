@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.2
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1:3306
--- Generation Time: Oct 30, 2020 at 05:26 AM
--- Server version: 8.0.21
--- PHP Version: 7.1.33
+-- Host: 127.0.0.1
+-- Generation Time: Apr 15, 2023 at 10:58 AM
+-- Server version: 10.4.19-MariaDB
+-- PHP Version: 8.0.7
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -27,22 +27,21 @@ SET time_zone = "+00:00";
 -- Table structure for table `admin`
 --
 
-DROP TABLE IF EXISTS `admin`;
-CREATE TABLE IF NOT EXISTS `admin` (
-  `id` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL,
   `image` varchar(100) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `verify_token` varchar(200) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`id`, `name`, `image`, `email`, `password`) VALUES
-(1, 'Hamza Mughal', 'logo.png', 'admin@gmail.com', 'hamza123');
+INSERT INTO `admin` (`id`, `name`, `image`, `email`, `password`, `verify_token`) VALUES
+(1, 'admin', 'avatar.png', 'pw9766539@gmail.com', 'f925916e2754e5e03f75dd58a5733251', 'a2825cae2d65b4b0360aa07b6ca9ce22Souza');
 
 -- --------------------------------------------------------
 
@@ -50,28 +49,19 @@ INSERT INTO `admin` (`id`, `name`, `image`, `email`, `password`) VALUES
 -- Table structure for table `cart`
 --
 
-DROP TABLE IF EXISTS `cart`;
-CREATE TABLE IF NOT EXISTS `cart` (
-  `cart_id` int NOT NULL AUTO_INCREMENT,
-  `cust_id` int NOT NULL,
-  `product_id` int NOT NULL,
-  `quantity` int DEFAULT NULL,
-  PRIMARY KEY (`cart_id`),
-  KEY `product_id` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=92 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `cart` (
+  `cart_id` int(11) NOT NULL,
+  `cust_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `cart`
 --
 
 INSERT INTO `cart` (`cart_id`, `cust_id`, `product_id`, `quantity`) VALUES
-(28, 5, 42, 1),
-(86, 4, 42, 1),
-(87, 4, 40, 1),
-(88, 4, 41, 1),
-(89, 4, 37, 1),
-(90, 5, 40, 1),
-(91, 5, 13, 1);
+(197, 27, 40, 1);
 
 -- --------------------------------------------------------
 
@@ -79,13 +69,11 @@ INSERT INTO `cart` (`cart_id`, `cust_id`, `product_id`, `quantity`) VALUES
 -- Table structure for table `categories`
 --
 
-DROP TABLE IF EXISTS `categories`;
-CREATE TABLE IF NOT EXISTS `categories` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `category` varchar(100) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  `fontawesome-icon` varchar(25) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL,
+  `category` varchar(100) CHARACTER SET latin1 NOT NULL,
+  `fontawesome-icon` varchar(25) CHARACTER SET latin1 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `categories`
@@ -96,8 +84,7 @@ INSERT INTO `categories` (`id`, `category`, `fontawesome-icon`) VALUES
 (2, 'Dining set', 'fa-utensils-alt'),
 (3, 'Chairs', 'fa-chair-office'),
 (4, 'Table', 'fa-columns'),
-(5, 'Sofa', 'fa-couch'),
-(6, 'cupboard', 'fa-columns');
+(5, 'Sofa', 'fa-couch');
 
 -- --------------------------------------------------------
 
@@ -105,26 +92,21 @@ INSERT INTO `categories` (`id`, `category`, `fontawesome-icon`) VALUES
 -- Table structure for table `customer`
 --
 
-DROP TABLE IF EXISTS `customer`;
-CREATE TABLE IF NOT EXISTS `customer` (
-  `cust_id` int NOT NULL AUTO_INCREMENT,
-  `cust_name` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `cust_email` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `cust_pass` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `cust_add` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `cust_city` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `cust_postalcode` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `cust_number` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  PRIMARY KEY (`cust_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+CREATE TABLE `customer` (
+  `cust_id` int(11) NOT NULL,
+  `cust_name` varchar(100) NOT NULL,
+  `cust_email` varchar(100) NOT NULL,
+  `cust_pass` varchar(100) NOT NULL,
+  `cust_number` varchar(100) NOT NULL,
+  `verify_token` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `customer`
 --
 
-INSERT INTO `customer` (`cust_id`, `cust_name`, `cust_email`, `cust_pass`, `cust_add`, `cust_city`, `cust_postalcode`, `cust_number`) VALUES
-(4, 'Hamza Mughal', 'mhamzaq869@gmail.com', 'hamza123', 'h#3,St#62,area dar ul islam', 'lahore', '54810', '03077087412'),
-(5, 'demo', 'demo@gmail.com', 'hamza123', 'lahore cantt', 'lahore', '54840', '03224987258');
+INSERT INTO `customer` (`cust_id`, `cust_name`, `cust_email`, `cust_pass`, `cust_number`, `verify_token`) VALUES
+(27, 'clavin m', 'pw9766539@gmail.com', 'f925916e2754e5e03f75dd58a5733251', '0819757913', '');
 
 -- --------------------------------------------------------
 
@@ -132,41 +114,28 @@ INSERT INTO `customer` (`cust_id`, `cust_name`, `cust_email`, `cust_pass`, `cust
 -- Table structure for table `customer_order`
 --
 
-DROP TABLE IF EXISTS `customer_order`;
-CREATE TABLE IF NOT EXISTS `customer_order` (
-  `order_id` int NOT NULL AUTO_INCREMENT,
-  `customer_id` int NOT NULL,
-  `customer_email` varchar(100) NOT NULL,
-  `customer_fullname` varchar(100) NOT NULL,
+CREATE TABLE `customer_order` (
+  `order_id` int(11) NOT NULL,
+  `customer_id` int(11) NOT NULL,
   `customer_address` varchar(225) NOT NULL,
   `customer_city` varchar(50) NOT NULL,
-  `customer_pcode` int NOT NULL,
+  `customer_pcode` int(11) NOT NULL,
   `customer_phonenumber` varchar(100) NOT NULL,
-  `product_id` int NOT NULL,
-  `product_amount` int NOT NULL,
-  `invoice_no` int NOT NULL,
-  `products_qty` int NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_amount` int(11) NOT NULL,
+  `invoice_no` int(11) NOT NULL,
+  `products_qty` int(11) NOT NULL,
   `order_date` varchar(100) NOT NULL,
   `order_status` varchar(100) NOT NULL,
-  PRIMARY KEY (`order_id`),
-  KEY `customer_id` (`customer_id`),
-  KEY `product_id` (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=latin1;
+  `paymentMethod` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `customer_order`
 --
 
-INSERT INTO `customer_order` (`order_id`, `customer_id`, `customer_email`, `customer_fullname`, `customer_address`, `customer_city`, `customer_pcode`, `customer_phonenumber`, `product_id`, `product_amount`, `invoice_no`, `products_qty`, `order_date`, `order_status`) VALUES
-(65, 4, 'mhamzaq869@gmail.com', 'muhammad hamza qadri', 'h#3,St#62,area dar ul islam', 'lahore', 54810, '03077087412', 4, 22000, 1767434801, 1, '11-08-2020', 'verified'),
-(66, 4, 'mhamzaq869@gmail.com', 'muhammad hamza qadri', 'h#3,St#62,area dar ul islam', 'lahore', 54810, '03077087412', 4, 22000, 1945132454, 1, '18-08-2020', 'delivered'),
-(67, 4, 'mhamzaq869@gmail.com', 'muhammad hamza qadri', 'h#3,St#62,area dar ul islam', 'lahore', 54810, '03077087412', 5, 19000, 1945132454, 1, '18-08-2020', 'verified'),
-(68, 4, 'mhamzaq869@gmail.com', 'muhammad hamza qadri', 'h#3,St#62,area dar ul islam', 'lahore', 54810, '03077087412', 41, 12050, 1773695355, 1, '21-08-2020', 'pending'),
-(69, 4, 'mhamzaq869@gmail.com', 'muhammad hamza qadri', 'h#3,St#62,area dar ul islam', 'lahore', 54810, '03077087412', 35, 54050, 1773695355, 1, '21-08-2020', 'pending'),
-(70, 4, 'mhamzaq869@gmail.com', 'muhammad hamza qadri', 'h#3,St#62,area dar ul islam', 'lahore', 54810, '03077087412', 34, 14600, 1773695355, 1, '21-08-2020', 'delivered'),
-(71, 5, 'demo@gmail.com', 'demo', 'lahore cantt', 'lahore', 54840, '03224987258', 39, 49800, 1637501531, 2, '23-08-2020', 'pending'),
-(72, 5, 'demo@gmail.com', 'demo', 'lahore cantt', 'lahore', 54840, '03224987258', 32, 65000, 1637501531, 1, '23-08-2020', 'pending'),
-(73, 5, 'demo@gmail.com', 'demo', 'lahore cantt', 'lahore', 54840, '03224987258', 34, 14600, 1637501531, 1, '23-08-2020', 'pending');
+INSERT INTO `customer_order` (`order_id`, `customer_id`, `customer_address`, `customer_city`, `customer_pcode`, `customer_phonenumber`, `product_id`, `product_amount`, `invoice_no`, `products_qty`, `order_date`, `order_status`, `paymentMethod`) VALUES
+(195, 27, 'mangalore,karnataka.', 'Mangalore', 574150, '08197579132', 32, 260000, 1839309520, 4, '05-07-2022', 'delivered', 'COD');
 
 -- --------------------------------------------------------
 
@@ -174,27 +143,23 @@ INSERT INTO `customer_order` (`order_id`, `customer_id`, `customer_email`, `cust
 -- Table structure for table `furniture_product`
 --
 
-DROP TABLE IF EXISTS `furniture_product`;
-CREATE TABLE IF NOT EXISTS `furniture_product` (
-  `pid` int NOT NULL AUTO_INCREMENT,
+CREATE TABLE `furniture_product` (
+  `pid` int(11) NOT NULL,
   `title` varchar(80) NOT NULL,
-  `category` int NOT NULL,
+  `category` int(11) NOT NULL,
   `detail` text NOT NULL,
-  `price` int NOT NULL,
+  `price` int(11) NOT NULL,
   `size` varchar(40) NOT NULL,
   `image` varchar(200) NOT NULL,
   `date` varchar(100) NOT NULL,
-  `status` varchar(50) NOT NULL,
-  PRIMARY KEY (`pid`),
-  KEY `category` (`category`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `status` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `furniture_product`
 --
 
 INSERT INTO `furniture_product` (`pid`, `title`, `category`, `detail`, `price`, `size`, `image`, `date`, `status`) VALUES
-(4, 'This is new modern Chair', 3, '<p>This is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern Chair</p>\r\n', 22000, '35w x 35H (inches)', 'armchair.jpg', '22-9-2020', 'publish'),
 (5, 'This is new modern Chair', 3, '<p>This is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern Chair</p>\r\n', 19000, '35w x 35H (inches)', 'chairyellow.jpg', '19-8-2020', 'publish'),
 (11, 'Esquel 2 Seater Sofa with Side Rest - Gray', 5, '<p>Esquel 2 Seater Sofa with side rest will give you comfort and add brand new style to your space by also adding a pop of Gray</p>\r\n', 57500, '84w X 30h', 'Esquel2SeaterSofawithSideRest-Gray2_1024x1024.webp', '21-08-2020', 'publish'),
 (13, 'Esquel 1 Seater Sofa - Gray', 5, '<p>Esquel 1 Seater Sofa will give you comfort and add brand new style to your space by also adding a pop of Gray</p>\r\n', 30500, '33.5w X 27h', 'Esquel1SeaterSofa-Gray3_1024x1024.webp', '21-08-2020', 'publish'),
@@ -224,8 +189,120 @@ INSERT INTO `furniture_product` (`pid`, `title`, `category`, `detail`, `price`, 
 (38, 'Sienna Table', 2, '<p>Height: 31 inchesLength: 48 inchesWidth: 24 inches</p>\r\n', 27150, '75w x 24h', 'SIENNA_3c7d4f3f-9d24-4fa2-93f3-4430ca022f8b_1024x1024.webp', '21-08-2020', 'publish'),
 (39, 'Lorenzo Table', 4, '<p>Top made of MDF covered with PVC paper having four stools, frame made of MS pipe powder coated black color.</p>\r\n', 24900, '25w X 22h', 'coffee-table-design-glass-and-wood-scandinavian-fiord-l-110xp60xh45cm.jpg', '21-08-2020', 'publish'),
 (40, 'Estela Table', 4, '<p>Height: 4 inches. Width: 20 inches. Length: 5.5 inches.Top made of printed tempered glass, legs made of MS pipe powder coated black color.</p>\r\n', 12400, '20w x 4h', 'aza_1024x1024.jpg', '21-08-2020', 'publish'),
-(41, 'Diogo Table', 1, '<p>Height: 4 inches. Width: 18 inches. Length: 8 inches. Top made of MDF wood texture, legs made of MS powder coated black.</p>\r\n', 12050, '18w x 4h', 'FC-FUR-BS-510_1024x1024.jpg', '21-08-2020', 'publish'),
-(42, 'Erico Table', 4, '<p>Height: 4 inches. Width: 20 inches. Length: 5.5 inches.Top made of printed tempered glass, legs made of MS pipe powder coated black color.</p>\r\n', 12050, '20w X 5.5h', 'sads_1024x1024.jpg', '21-08-2020', 'publish');
+(42, 'Erico Table', 4, '<p>Height: 4 inches. Width: 20 inches. Length: 5.5 inches.Top made of printed tempered glass, legs made of MS pipe powder coated black color.</p>\r\n', 12050, '20w X 5.5h', 'sads_1024x1024.jpg', '21-08-2020', 'draft'),
+(46, 'Chairs', 3, '<p>This is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern ChairThis is new modern</p>\r\n', 22000, '35w x 35H (inches)', '10_3a1ecc81-f11d-47f8-be93-df21d0d12993_1024x1024.jpg', '30-06-2022', 'publish');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `review`
+--
+
+CREATE TABLE `review` (
+  `review_id` int(11) NOT NULL,
+  `productId` int(11) NOT NULL,
+  `name` varchar(20) CHARACTER SET latin1 NOT NULL,
+  `review` varchar(200) CHARACTER SET latin1 NOT NULL,
+  `reviewDate` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `admin`
+--
+ALTER TABLE `admin`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `cart`
+--
+ALTER TABLE `cart`
+  ADD PRIMARY KEY (`cart_id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `cust_id` (`cust_id`);
+
+--
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `customer`
+--
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`cust_id`);
+
+--
+-- Indexes for table `customer_order`
+--
+ALTER TABLE `customer_order`
+  ADD PRIMARY KEY (`order_id`),
+  ADD KEY `customer_id` (`customer_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `furniture_product`
+--
+ALTER TABLE `furniture_product`
+  ADD PRIMARY KEY (`pid`),
+  ADD KEY `category` (`category`);
+
+--
+-- Indexes for table `review`
+--
+ALTER TABLE `review`
+  ADD PRIMARY KEY (`review_id`),
+  ADD KEY `productId` (`productId`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `admin`
+--
+ALTER TABLE `admin`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `cart`
+--
+ALTER TABLE `cart`
+  MODIFY `cart_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=198;
+
+--
+-- AUTO_INCREMENT for table `categories`
+--
+ALTER TABLE `categories`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
+-- AUTO_INCREMENT for table `customer`
+--
+ALTER TABLE `customer`
+  MODIFY `cust_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+
+--
+-- AUTO_INCREMENT for table `customer_order`
+--
+ALTER TABLE `customer_order`
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=196;
+
+--
+-- AUTO_INCREMENT for table `furniture_product`
+--
+ALTER TABLE `furniture_product`
+  MODIFY `pid` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+
+--
+-- AUTO_INCREMENT for table `review`
+--
+ALTER TABLE `review`
+  MODIFY `review_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- Constraints for dumped tables
@@ -235,7 +312,8 @@ INSERT INTO `furniture_product` (`pid`, `title`, `category`, `detail`, `price`, 
 -- Constraints for table `cart`
 --
 ALTER TABLE `cart`
-  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `furniture_product` (`pid`);
+  ADD CONSTRAINT `cart_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `furniture_product` (`pid`),
+  ADD CONSTRAINT `cart_ibfk_2` FOREIGN KEY (`cust_id`) REFERENCES `customer` (`cust_id`);
 
 --
 -- Constraints for table `customer_order`
@@ -249,6 +327,12 @@ ALTER TABLE `customer_order`
 --
 ALTER TABLE `furniture_product`
   ADD CONSTRAINT `furniture_product_ibfk_1` FOREIGN KEY (`category`) REFERENCES `categories` (`id`);
+
+--
+-- Constraints for table `review`
+--
+ALTER TABLE `review`
+  ADD CONSTRAINT `review_ibfk_1` FOREIGN KEY (`productId`) REFERENCES `furniture_product` (`pid`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

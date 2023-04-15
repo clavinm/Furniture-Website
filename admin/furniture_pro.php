@@ -1,5 +1,7 @@
 <?php 
  require_once('include/header.php');
+ require_once "../loading/load.php";
+
  if(!isset($_SESSION['email'])){
   header('location: signin.php');
 }
@@ -33,37 +35,46 @@ if(isset($_SESSION['email'])){
                     $image      = $_FILES['upload']['name'];
                     $tmp_image  = $_FILES['upload']['tmp_name'];
                         
-                    if(!empty($title) or !empty($size) or !empty($price) or !empty($status) or !empty($category) or !empty($detail) or !empty($image)){
+                    if(!empty($title) && !empty($size) && !empty($price) && !empty($status) && !empty($category) && !empty($detail) && !empty($image)){
                      $query = "INSERT INTO furniture_product(`title`, `category`, `size`, `price`, `detail`, `image`, `date`, `status`)
                       VALUES('$title',$category,'$size',$price,'$detail','$image','$date','$status')";
                      
+                     $_SESSION['status'] = "Furniture Product Has Been Published";
+                           
                         if(mysqli_query($con,$query)){
                             $path = "img/".$image;
                             
                             if(move_uploaded_file($tmp_image,$path) == true){
                                 copy($path,"../".$path);
-                              
-                                $msg = "Furniture Product Has Been Published";
-                            }
+                               }
                         }
                                               
+                    }
+                    else{
+                      $_SESSION['status']= "All Fields Are Mandatory";
+                        
                     }
                                    
                 }
 
-                 if(isset($msg)){
-                  echo "<span class='mt-3 mb-4' style='color:green; font-weight:bold;'><i style='color:green; font-weight:bold;' class='fas fa-smile'></i> $msg</span>";
-                 }
+                
                     ?>
        
             <div class="row">
-                <?php if(isset($message)){
-                        echo "<p style='color:green; font-weight:bold;'>$message</p>";
-                    } else if(isset($error)){
-               echo "<span style='color:red; font-weight:bold;'><i style='color:red; font-weight:bold;' class='fas fa-frown'></i> $error</span>";
-                    }?>
                     <!-- Grid column -->
                     <div class="col-md-12">
+                    <?php
+                if(isset($_SESSION['status']))
+                {
+            ?>
+                <div class="alert alert-success">
+                <h5><?= $_SESSION['status']; ?></h5>
+                </div>
+            <?php
+                unset($_SESSION['status']);
+                }
+            ?>
+
                       <div class="form-group">
                        <label for="furniture">Furniture Product Title:</label>
                        <input type="text" class="form-control" name="title" id="inputEmail4MD" placeholder="Title">

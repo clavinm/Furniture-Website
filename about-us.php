@@ -1,5 +1,5 @@
 <?php include('include/header.php');
-  ?>
+  require_once "loading/load.php";?>
   
         <div class="container sign-in-up">
           <div class="row">

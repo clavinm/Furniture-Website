@@ -1,5 +1,5 @@
 <?php include('include/header.php');
-
+require_once "loading/load.php";
 
   if(isset($_GET['page'])){
     $page_id = $_GET['page'];

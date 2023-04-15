@@ -1,4 +1,5 @@
-<?php include('include/header.php'); ?>
+<?php include('include/header.php');
+?>
         
         <div class="jumbotron">
             <h2 class="text-center mt-5">Product detail</h2>
